@@ -21,4 +21,4 @@ var loadState = {
     // Call the Menu State
     game.state.start('menu');
   }
-}
+};
