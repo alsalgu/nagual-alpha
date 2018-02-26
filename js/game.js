@@ -7,7 +7,7 @@
 // The second parameter is the ID of the Div Element
 // the Game is in.
 window.onload = function(){
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
+game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
 var map;
 var layer;
 
