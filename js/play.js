@@ -21,23 +21,24 @@ playState.prototype = {
     map.addTilesetImage('testTilesheet', 'tiles')
 
     // Create layer from the layer in map data
+    // Only first layer needs to be a defined variable
     layer = map.createLayer('BG1');
+    // Resize the game world to fit the map size
     layer.resizeWorld();
+    // Create map layers from Tiled Editor layers
     map.createLayer('PLATFORMS')
   },
 
   update: function() {
-    if(this.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-        this.camera.y += 10;
+    if (this.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+      this.camera.y += 10;
+    } else if (this.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+      this.camera.y -= 10;
     }
-    else if (this.input.keyboard.isDown(Phaser.Keyboard.UP)){
-        this.camera.y -= 10;
+    if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+      this.camera.x -= 10;
+    } else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+      this.camera.x += 10;
     }
-    if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
-        this.camera.x -= 10;
-    }
-    else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-        this.camera.x += 10;
-    }
-}
+  }
 }
