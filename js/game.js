@@ -7,7 +7,9 @@
 // The second parameter is the ID of the Div Element
 // the Game is in.
 window.onload = function(){
-game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
+var map;
+var layer;
 
 // Adding each state with a calling and defining name.
 game.state.add('boot', bootState);
