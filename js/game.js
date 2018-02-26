@@ -10,6 +10,7 @@ window.onload = function(){
 game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
 var map;
 var layer;
+var collision;
 var cursors;
 
 // Adding each state with a calling and defining name.
