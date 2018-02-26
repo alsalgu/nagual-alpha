@@ -38,17 +38,46 @@ playState.prototype = {
     player.body.bounce.y = 0.2;
     player.body.gravity.y = 700;
     player.body.collideWorldBounds = true;
+
+    // Player Add animations
+    player.animations.add('move', [0, 1], 10, true);
+
     // Camera follows player.
-    game.camera.follow(player)
+    game.camera.follow(player);
+
+    // Add Keyboard Controls
+    cursors = game.input.keyboard.createCursorKeys();
   },
 
   update: function() {
     // Enable collision checks between params
     // First Param is a sprite
     // Second param is a layer
-    game.physics.arcade.collide(player, collision);
+    var hitPlat = game.physics.arcade.collide(player, collision);
 
     // Player Controls
+    player.body.velocity.x = 0;
+    if (cursors.left.isDown) {
+      //  Move to the left
+      player.body.velocity.x = -150;
+
+      player.animations.play('move');
+    } else if (cursors.right.isDown) {
+      //  Move to the right
+      player.body.velocity.x = 150;
+
+      player.animations.play('move');
+    } else {
+      //  Stand still
+      player.animations.stop();
+
+      player.frame = 1;
+    }
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && hitPlat)
+    {
+        player.body.velocity.y = -350;
+    }
 
   }
 }
