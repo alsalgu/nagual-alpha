@@ -1,24 +1,26 @@
-var loadState = {
+var loadState = function(game) {}
+
+loadState.prototype = {
   // Phaser Function Preload
   preload: function() {
 
     // Add a loading label on the screen
-    var loadingLabel = game.add.text(80, 150, 'loading...', {
+    var loadingLabel = this.game.add.text(80, 150, 'loading...', {
       font: '30px Courier',
       fill: '#ffffff'
     });
 
     //Loading all assests
     //Sprites
-    game.load.spritesheet('player', 'assets/sprites/spritesheets/', 48, 48);
+    this.game.load.spritesheet('player', 'assets/sprites/spritesheets/', 48, 48);
     //Maps
     // First load the tilemap JSON, and then the corresponding tileset image
-    game.load.tilemap('testMap', 'assets/maps/testMap.JSON', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles', 'assets/sprites/tilesheets/testTilesheet.png');
+    this.game.load.tilemap('testMap', 'assets/maps/testMap.JSON', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image('tiles', 'assets/sprites/tilesheets/testTilesheet.png');
   },
 
   create: function() {
     // Call the Menu State
-    game.state.start('menu');
+    this.game.state.start('menu');
   }
 };

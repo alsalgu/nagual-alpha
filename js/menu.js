@@ -1,4 +1,6 @@
-var menuState = {
+var menuState = function(game){}
+
+menuState.prototype = {
   create: function() {
     // Create Game Menu Text. Params: (x, y, 'String', 'font attributes')
     var nameLabel = game.add.text(80, 80, 'Nagual Alpha', {
@@ -21,6 +23,6 @@ var menuState = {
   },
 
   start: function(){
-    game.stare.start('play');
+    game.state.start('play');
   },
-};
+}
