@@ -16,7 +16,7 @@ loadState.prototype = {
     //Maps
     // First load the tilemap JSON, and then the corresponding tileset image
     this.game.load.tilemap('testMap', 'assets/maps/testMap.JSON', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('tiles', 'assets/sprites/tilesheets/testTilesheet.png');
+    this.game.load.image('tiles', 'assets/sprites/tilesheets/basic-tiles.png');
   },
 
   create: function() {

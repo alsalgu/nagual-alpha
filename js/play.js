@@ -11,7 +11,7 @@ playState.prototype = {
 
     // First Param = Tileset Name from Tiled and JSON
     // Second Param = Maps this name to Phaser.Cache key 'tiles'
-    map.addTilesetImage('testTilesheet', 'tiles')
+    map.addTilesetImage('basic-tiles', 'tiles')
 
     // Create layer from the layer in map data
     // Only first layer needs to be a defined variable
