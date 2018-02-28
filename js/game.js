@@ -19,6 +19,9 @@ game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('play', playState);
 
+//Create Global Functions to be Shared Across States/Levels
+
+
 // Once all states have been added, start the game
 // By Calling Boot State.
 game.state.start('boot');}

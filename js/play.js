@@ -21,13 +21,18 @@ playState.prototype = {
     layer.resizeWorld();
 
     // Create map layers from Tiled Editor layers
-    collision = map.createLayer('PLATFORMS');
+    ground = map.createLayer('GROUND');
+    ice = map.createLayer('ICE');
+    water = map.createLayer('WATER');
+
 
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
     // Finally select the Tiled layer to collide with
-    map.setCollisionBetween(1, 999, true, 'PLATFORMS')
+    map.setCollisionBetween(1, 999, true, 'GROUND');
+    map.setCollisionBetween(1, 999, true, 'ICE');
+    map.setCollisionBetween(1, 999, false, 'WATER');
 
     // Add Player Sprite
     player = game.add.sprite(48, 48, 'player');
@@ -47,13 +52,17 @@ playState.prototype = {
 
     // Add Keyboard Controls
     cursors = game.input.keyboard.createCursorKeys();
+
+    //Attempting to add Tiled Objects to Phaser Groups
   },
 
   update: function() {
     // Enable collision checks between params
     // First Param is a sprite
     // Second param is a layer
-    var hitPlat = game.physics.arcade.collide(player, collision);
+    var hitPlat = game.physics.arcade.collide(player, ground);
+    var hitIce = game.physics.arcade.collide(player, ice);
+    var inWater = game.physics.arcade.overlap(player, water);
 
     // Player Controls
     player.body.velocity.x = 0;
@@ -74,10 +83,10 @@ playState.prototype = {
       player.frame = 1;
     }
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && hitPlat)
-    {
-        player.body.velocity.y = -350;
+    if (cursors.up.isDown && player.body.onFloor() && hitPlat) {
+      player.body.velocity.y = -350;
+    } else if (cursors.up.isDown && player.body.onFloor() && hitIce) {
+      player.body.velocity.y = -350;
     }
-
   }
 }
