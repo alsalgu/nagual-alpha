@@ -24,6 +24,8 @@ playState.prototype = {
     ground = map.createLayer('GROUND');
     ice = map.createLayer('ICE');
     water = map.createLayer('WATER');
+    waterObject = game.add.physicsGroup();
+    map.createFromObjects('OBJECTS', 'water', 'test', 1, true, false, waterObject);
 
 
     // Set Collision for tiles,
@@ -55,6 +57,13 @@ playState.prototype = {
 
     //Attempting to add Tiled Objects to Phaser Groups
   },
+  checkOverlap: function(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+  },
 
   update: function() {
     // Enable collision checks between params
@@ -62,7 +71,6 @@ playState.prototype = {
     // Second param is a layer
     var hitPlat = game.physics.arcade.collide(player, ground);
     var hitIce = game.physics.arcade.collide(player, ice);
-    var inWater = game.physics.arcade.overlap(player, water);
 
     // Player Controls
     player.body.velocity.x = 0;
@@ -84,9 +92,15 @@ playState.prototype = {
     }
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && player.body.onFloor() && hitPlat) {
-      player.body.velocity.y = -350;
+      player.body.velocity.y = -200;
     } else if (cursors.up.isDown && player.body.onFloor() && hitIce) {
-      player.body.velocity.y = -350;
+      player.body.velocity.y = -200;
+    }
+
+    if (playState.prototype.checkOverlap(player, waterObject)) {
+      player.body.gravity.y = 100;
+    } else {
+      player.body.gravity.y = 700;
     }
   }
 }
