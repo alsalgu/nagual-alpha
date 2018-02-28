@@ -99,9 +99,9 @@ playState.prototype = {
       player.frame = 1;
     }
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.onFloor() && hitPlat) {
+    if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
       player.body.velocity.y = -200;
-    } else if (cursors.up.isDown && player.body.onFloor() && hitIce) {
+    } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
       player.body.velocity.y = -200;
     };
 
