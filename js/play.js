@@ -25,6 +25,9 @@ playState.prototype = {
     ice = map.createLayer('ICE');
     water = map.createLayer('WATER');
     waterObject = game.add.physicsGroup();
+    // Creating Objects from Tiled Objects layers JSON data
+    // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
+    // true, false, group you're adding them into)
     map.createFromObjects('OBJECTS', 'water', 'test', 1, true, false, waterObject);
 
 
@@ -57,6 +60,8 @@ playState.prototype = {
 
     //Attempting to add Tiled Objects to Phaser Groups
   },
+
+  //FUnction to check the boundaries of two sprites and see if they overlap
   checkOverlap: function(spriteA, spriteB) {
 
     var boundsA = spriteA.getBounds();
