@@ -27,14 +27,23 @@ playState.prototype = {
     waterObject = game.add.physicsGroup();
     spikes = game.add.physicsGroup();
     player = game.add.physicsGroup();
+    coyotl = game.add.physicsGroup();
+    papalotl = game.add.physicsGroup();
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
     map.createFromObjects('OBJECTS', 'water', 'tiles', 1, true, false, waterObject);
     map.createFromObjects('OBJECTS', 'spikes', 'tiles', 21, true, false, spikes);
     map.createFromObjects('OBJECTS', 'playerSpawn', 'player', 0, true, false, player);
+    map.createFromObjects('OBJECTS', 'coyotl', 'tiles', 13, true, false, coyotl);
+    map.createFromObjects('OBJECTS', 'papalotl', 'tiles', 23, true, false, papalotl);
+
     spikes.forEach(function(spikes){
       spikes.body.immovable = true;
+    });
+    papalotl.forEach(function(papalotl){
+      papalotl.animations.add('flutter', [23, 24, 25], 10, true);
+      papalotl.animations.play('flutter');
     });
     player.forEach(function(player){
       player.body.bounce.y = 0.2;
@@ -42,7 +51,7 @@ playState.prototype = {
       player.body.collideWorldBounds = true;
       player.animations.add('move', [0, 1], 10, true);
       game.camera.follow(player);
-    })
+    });
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
