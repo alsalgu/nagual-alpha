@@ -11,7 +11,7 @@ playState.prototype = {
 
     // First Param = Tileset Name from Tiled and JSON
     // Second Param = Maps this name to Phaser.Cache key 'tiles'
-    map.addTilesetImage('testTilesheet', 'tiles')
+    map.addTilesetImage('basic-tiles', 'tiles')
 
     // Create layer from the layer in map data
     // Only first layer needs to be a defined variable
@@ -21,13 +21,25 @@ playState.prototype = {
     layer.resizeWorld();
 
     // Create map layers from Tiled Editor layers
-    collision = map.createLayer('PLATFORMS');
-
+    ground = map.createLayer('GROUND');
+    ice = map.createLayer('ICE');
+    water = map.createLayer('WATER');
+    waterObject = game.add.physicsGroup();
+    spikes = game.add.physicsGroup();
+    // Creating Objects from Tiled Objects layers JSON data
+    // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
+    // true, false, group you're adding them into)
+    map.createFromObjects('OBJECTS', 'water', 'tiles', 1, true, false, waterObject);
+    map.createFromObjects('OBJECTS', 'spikes', 'tiles', 21, true, false, spikes);
+    spikes.forEach(function(spikes){
+      spikes.body.immovable = true;
+    })
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
     // Finally select the Tiled layer to collide with
-    map.setCollisionBetween(1, 999, true, 'PLATFORMS')
+    map.setCollisionBetween(1, 999, true, 'GROUND');
+    map.setCollisionBetween(1, 999, true, 'ICE');
 
     // Add Player Sprite
     player = game.add.sprite(48, 48, 'player');
@@ -47,13 +59,26 @@ playState.prototype = {
 
     // Add Keyboard Controls
     cursors = game.input.keyboard.createCursorKeys();
+
+    //Attempting to add Tiled Objects to Phaser Groups
+  },
+
+  //FUnction to check the boundaries of two sprites and see if they overlap
+  checkOverlap: function(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
   update: function() {
     // Enable collision checks between params
     // First Param is a sprite
     // Second param is a layer
-    var hitPlat = game.physics.arcade.collide(player, collision);
+    var hitPlat = game.physics.arcade.collide(player, ground);
+    var hitIce = game.physics.arcade.collide(player, ice);
+    var hitSpikes = game.physics.arcade.collide(player, spikes);
 
     // Player Controls
     player.body.velocity.x = 0;
@@ -74,10 +99,20 @@ playState.prototype = {
       player.frame = 1;
     }
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && hitPlat)
-    {
-        player.body.velocity.y = -350;
-    }
+    if (cursors.up.isDown && player.body.onFloor() && hitPlat) {
+      player.body.velocity.y = -200;
+    } else if (cursors.up.isDown && player.body.onFloor() && hitIce) {
+      player.body.velocity.y = -200;
+    };
 
+    if (hitSpikes){
+      console.log('owie')
+    };
+
+    if (playState.prototype.checkOverlap(player, waterObject)) {
+      player.body.gravity.y = 100;
+    } else {
+      player.body.gravity.y = 700;
+    }
   }
 }
