@@ -26,13 +26,22 @@ playState.prototype = {
     water = map.createLayer('WATER');
     waterObject = game.add.physicsGroup();
     spikes = game.add.physicsGroup();
+    player = game.add.physicsGroup();
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
     map.createFromObjects('OBJECTS', 'water', 'tiles', 1, true, false, waterObject);
     map.createFromObjects('OBJECTS', 'spikes', 'tiles', 21, true, false, spikes);
+    map.createFromObjects('OBJECTS', 'playerSpawn', 'player', 0, true, false, player);
     spikes.forEach(function(spikes){
       spikes.body.immovable = true;
+    });
+    player.forEach(function(player){
+      player.body.bounce.y = 0.2;
+      player.body.gravity.y = 700;
+      player.body.collideWorldBounds = true;
+      player.animations.add('move', [0, 1], 10, true);
+      game.camera.follow(player);
     })
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
@@ -40,22 +49,6 @@ playState.prototype = {
     // Finally select the Tiled layer to collide with
     map.setCollisionBetween(1, 999, true, 'GROUND');
     map.setCollisionBetween(1, 999, true, 'ICE');
-
-    // Add Player Sprite
-    player = game.add.sprite(48, 48, 'player');
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
-
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 700;
-    player.body.collideWorldBounds = true;
-
-    // Player Add animations
-    player.animations.add('move', [0, 1], 10, true);
-
-    // Camera follows player.
-    game.camera.follow(player);
 
     // Add Keyboard Controls
     cursors = game.input.keyboard.createCursorKeys();
@@ -76,43 +69,42 @@ playState.prototype = {
     // Enable collision checks between params
     // First Param is a sprite
     // Second param is a layer
-    var hitPlat = game.physics.arcade.collide(player, ground);
-    var hitIce = game.physics.arcade.collide(player, ice);
-    var hitSpikes = game.physics.arcade.collide(player, spikes);
+    player.forEach(function(player){
+      var hitPlat = game.physics.arcade.collide(player, ground);
+      var hitIce = game.physics.arcade.collide(player, ice);
+      var hitSpikes = game.physics.arcade.collide(player, spikes);
 
-    // Player Controls
-    player.body.velocity.x = 0;
-    if (cursors.left.isDown) {
-      //  Move to the left
-      player.body.velocity.x = -150;
+      // Player Controls
+      player.body.velocity.x = 0;
+      if (cursors.left.isDown) {
+        //  Move to the left
+        player.body.velocity.x = -150;
 
-      player.animations.play('move');
-    } else if (cursors.right.isDown) {
-      //  Move to the right
-      player.body.velocity.x = 150;
+        player.animations.play('move');
+      } else if (cursors.right.isDown) {
+        //  Move to the right
+        player.body.velocity.x = 150;
 
-      player.animations.play('move');
-    } else {
-      //  Stand still
-      player.animations.stop();
+        player.animations.play('move');
+      } else {
+        //  Stand still
+        player.animations.stop();
 
-      player.frame = 1;
-    }
-    //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
-      player.body.velocity.y = -200;
-    } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
-      player.body.velocity.y = -200;
-    };
+        player.frame = 1;
+      }
+      //  Allow the player to jump if they are touching the ground.
+      if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
+        player.body.velocity.y = -200;
+      } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
+        player.body.velocity.y = -200;
+      };
 
-    if (hitSpikes){
-      console.log('owie')
-    };
+      if (hitSpikes){
+        console.log('owie')
+      };
+    })
 
-    if (playState.prototype.checkOverlap(player, waterObject)) {
-      player.body.gravity.y = 100;
-    } else {
-      player.body.gravity.y = 700;
-    }
+
+
   }
 }
