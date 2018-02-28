@@ -312,6 +312,18 @@
                  "width":48,
                  "x":1008,
                  "y":672
+                }, 
+                {
+                 "gid":112,
+                 "height":48,
+                 "id":163,
+                 "name":"playerSpawn",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":48,
+                 "y":912
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -319,7 +331,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":163,
+ "nextobjectid":164,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.2",
