@@ -74,6 +74,10 @@ playState.prototype = {
     return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
+  collectPapalotl: function(player, papalotl){
+    papalotl.kill();
+  },
+
   update: function() {
     // Enable collision checks between params
     // First Param is a sprite
@@ -82,6 +86,7 @@ playState.prototype = {
       var hitPlat = game.physics.arcade.collide(player, ground);
       var hitIce = game.physics.arcade.collide(player, ice);
       var hitSpikes = game.physics.arcade.collide(player, spikes);
+      var hitPapalotl = game.physics.arcade.overlap(player, papalotl, playState.prototype.collectPapalotl)
 
       // Player Controls
       player.body.velocity.x = 0;
@@ -111,9 +116,7 @@ playState.prototype = {
       if (hitSpikes){
         console.log('owie')
       };
-    })
-
-
+    });
 
   }
 }
