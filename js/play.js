@@ -103,7 +103,11 @@ playState.prototype = {
       player.body.velocity.y = -200;
     } else if (cursors.up.isDown && player.body.onFloor() && hitIce) {
       player.body.velocity.y = -200;
-    }
+    };
+
+    if (hitSpikes){
+      console.log('owie')
+    };
 
     if (playState.prototype.checkOverlap(player, waterObject)) {
       player.body.gravity.y = 100;
