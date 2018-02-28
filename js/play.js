@@ -29,6 +29,7 @@ playState.prototype = {
     player = game.add.physicsGroup();
     coyotl = game.add.physicsGroup();
     papalotl = game.add.physicsGroup();
+    collision = game.add.physicsGroup();
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
@@ -37,7 +38,7 @@ playState.prototype = {
     map.createFromObjects('OBJECTS', 'playerSpawn', 'player', 0, true, false, player);
     map.createFromObjects('OBJECTS', 'coyotl', 'tiles', 13, true, false, coyotl);
     map.createFromObjects('OBJECTS', 'papalotl', 'tiles', 23, true, false, papalotl);
-
+    map.createFromObjects('OBJECTS', 'col', 'tiles', 1, true, false, collision);
     spikes.forEach(function(spikes){
       spikes.body.immovable = true;
     });
@@ -45,6 +46,9 @@ playState.prototype = {
       papalotl.animations.add('flutter', [23, 24, 25], 10, true);
       papalotl.animations.play('flutter');
     });
+    collision.forEach(function(collision){
+      collision.body.immovable = true ;
+    })
     player.forEach(function(player){
       player.body.bounce.y = 0.2;
       player.body.gravity.y = 700;
@@ -52,6 +56,12 @@ playState.prototype = {
       player.animations.add('move', [0, 1], 10, true);
       game.camera.follow(player);
     });
+    coyotl.forEach(function(coyotl){
+      coyotl.body.gravity.y = 700;
+      coyotl.animations.add('move', [13, 14, 15], 10, true);
+      coyotl.animations.play('move');
+      game.physics.enable(coyotl);
+    })
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
@@ -116,6 +126,13 @@ playState.prototype = {
       if (hitSpikes){
         console.log('owie')
       };
+    });
+
+    coyotl.forEach(function(coyotl){
+      var coyotlHitCol = game.physics.arcade.collide(coyotl, collision)
+      game.physics.arcade.collide(coyotl, ground);
+      game.physics.arcade.collide(coyotl, ice);
+      coyotl.body.velocity.x = -100;
     });
 
   }
