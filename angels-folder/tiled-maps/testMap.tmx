@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="48" tileheight="48" infinite="0" nextobjectid="149">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="48" tileheight="48" infinite="0" nextobjectid="163">
  <tileset firstgid="1" name="testTilesheet" tilewidth="48" tileheight="48" tilecount="100" columns="10">
   <image source="../../assets/sprites/tilesheets/testTilesheet.png" width="480" height="480"/>
  </tileset>
@@ -131,38 +131,19 @@
   <object id="37" name="spikes" gid="123" x="480" y="144" width="48" height="48"/>
   <object id="38" name="spikes" gid="123" x="528" y="144" width="48" height="48"/>
   <object id="39" name="spikes" gid="122" x="384" y="720" width="48" height="48"/>
-  <object id="53" name="playerSpawn" x="96" y="912">
-   <point/>
-  </object>
-  <object id="54" x="240" y="144">
-   <point/>
-  </object>
-  <object id="55" x="816" y="144">
-   <point/>
-  </object>
-  <object id="56" x="1056" y="720">
-   <point/>
-  </object>
-  <object id="57" x="720" y="480">
-   <point/>
-  </object>
-  <object id="58" name="enemySpawn" x="672" y="1008">
-   <point/>
-  </object>
-  <object id="59" name="enemySpawn" x="240" y="144">
-   <point/>
-  </object>
-  <object id="60" name="enemySpawn" x="816" y="144">
-   <point/>
-  </object>
-  <object id="61" name="enemySpawn" x="720" y="480">
-   <point/>
-  </object>
-  <object id="62" name="enemySpawn" x="1056" y="720">
-   <point/>
-  </object>
   <object id="146" name="water" gid="112" x="288" y="1152" width="96" height="192"/>
   <object id="147" name="water" gid="112" x="384" y="1152" width="576" height="96"/>
   <object id="148" name="water" gid="112" x="864" y="1056" width="96" height="144"/>
+  <object id="149" name="coyotl" gid="114" x="720" y="480" width="48" height="48"/>
+  <object id="150" name="coyotl" gid="114" x="240" y="144" width="48" height="48"/>
+  <object id="151" type="coyotl" gid="114" x="432" y="960" width="48" height="48"/>
+  <object id="152" name="coyotl" gid="114" x="768" y="144" width="48" height="48"/>
+  <object id="153" name="papalotl" gid="124" x="96" y="720" width="48" height="48"/>
+  <object id="154" name="papalotl" gid="124" x="528" y="912" width="48" height="48"/>
+  <object id="155" name="papalotl" gid="124" x="1008" y="144" width="48" height="48"/>
+  <object id="156" name="papalotl" gid="124" x="960" y="480" width="48" height="48"/>
+  <object id="157" name="papalotl" gid="124" x="144" y="336" width="48" height="48"/>
+  <object id="158" name="papalotl" gid="124" x="504" y="372" width="48" height="48"/>
+  <object id="161" name="papalotl" gid="124" x="1008" y="672" width="48" height="48"/>
  </objectgroup>
 </map>
