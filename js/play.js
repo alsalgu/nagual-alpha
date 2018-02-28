@@ -25,19 +25,21 @@ playState.prototype = {
     ice = map.createLayer('ICE');
     water = map.createLayer('WATER');
     waterObject = game.add.physicsGroup();
+    spikes = game.add.physicsGroup();
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
-    map.createFromObjects('OBJECTS', 'water', 'test', 1, true, false, waterObject);
-
-
+    map.createFromObjects('OBJECTS', 'water', 'tiles', 1, true, false, waterObject);
+    map.createFromObjects('OBJECTS', 'spikes', 'tiles', 21, true, false, spikes);
+    spikes.forEach(function(spikes){
+      spikes.body.immovable = true;
+    })
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
     // Finally select the Tiled layer to collide with
     map.setCollisionBetween(1, 999, true, 'GROUND');
     map.setCollisionBetween(1, 999, true, 'ICE');
-    map.setCollisionBetween(1, 999, false, 'WATER');
 
     // Add Player Sprite
     player = game.add.sprite(48, 48, 'player');
@@ -76,6 +78,7 @@ playState.prototype = {
     // Second param is a layer
     var hitPlat = game.physics.arcade.collide(player, ground);
     var hitIce = game.physics.arcade.collide(player, ice);
+    var hitSpikes = game.physics.arcade.collide(player, spikes);
 
     // Player Controls
     player.body.velocity.x = 0;
