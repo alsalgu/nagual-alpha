@@ -15,7 +15,7 @@ playState.prototype = {
 
     // Create layer from the layer in map data
     // Only first layer needs to be a defined variable
-    layer = map.createLayer('BG1');
+    layer = map.createLayer('COL');
 
     // Resize the game world to fit the map size
     layer.resizeWorld();
@@ -38,28 +38,25 @@ playState.prototype = {
     map.createFromObjects('OBJECTS', 'playerSpawn', 'player', 0, true, false, player);
     map.createFromObjects('OBJECTS', 'coyotl', 'tiles', 13, true, false, coyotl);
     map.createFromObjects('OBJECTS', 'papalotl', 'tiles', 23, true, false, papalotl);
-    map.createFromObjects('OBJECTS', 'col', 'tiles', 1, true, false, collision);
-    spikes.forEach(function(spikes){
+    spikes.forEach(function(spikes) {
       spikes.body.immovable = true;
     });
-    papalotl.forEach(function(papalotl){
+    papalotl.forEach(function(papalotl) {
       papalotl.animations.add('flutter', [23, 24, 25], 10, true);
       papalotl.animations.play('flutter');
     });
-    collision.forEach(function(collision){
-      collision.body.immovable = true ;
-    })
-    player.forEach(function(player){
+    player.forEach(function(player) {
       player.body.bounce.y = 0.2;
       player.body.gravity.y = 700;
       player.body.collideWorldBounds = true;
       player.animations.add('move', [0, 1], 10, true);
       game.camera.follow(player);
     });
-    coyotl.forEach(function(coyotl){
+    coyotl.forEach(function(coyotl) {
       coyotl.body.gravity.y = 700;
       coyotl.animations.add('move', [13, 14, 15], 10, true);
       coyotl.animations.play('move');
+      coyotl.anchor.setTo(.5, .5);
       game.physics.enable(coyotl);
     })
     // Set Collision for tiles,
@@ -68,6 +65,7 @@ playState.prototype = {
     // Finally select the Tiled layer to collide with
     map.setCollisionBetween(1, 999, true, 'GROUND');
     map.setCollisionBetween(1, 999, true, 'ICE');
+    map.setCollisionBetween(1,999, true, 'COL');
 
     // Add Keyboard Controls
     cursors = game.input.keyboard.createCursorKeys();
@@ -84,7 +82,7 @@ playState.prototype = {
     return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
-  collectPapalotl: function(player, papalotl){
+  collectPapalotl: function(player, papalotl) {
     papalotl.kill();
   },
 
@@ -92,7 +90,7 @@ playState.prototype = {
     // Enable collision checks between params
     // First Param is a sprite
     // Second param is a layer
-    player.forEach(function(player){
+    player.forEach(function(player) {
       var hitPlat = game.physics.arcade.collide(player, ground);
       var hitIce = game.physics.arcade.collide(player, ice);
       var hitSpikes = game.physics.arcade.collide(player, spikes);
@@ -123,16 +121,25 @@ playState.prototype = {
         player.body.velocity.y = -350;
       };
 
-      if (hitSpikes){
+      if (hitSpikes) {
         console.log('owie')
       };
     });
 
-    coyotl.forEach(function(coyotl){
-      var coyotlHitCol = game.physics.arcade.collide(coyotl, collision)
+    coyotl.forEach(function(coyotl) {
       game.physics.arcade.collide(coyotl, ground);
       game.physics.arcade.collide(coyotl, ice);
-      coyotl.body.velocity.x = -100;
+      game.physics.arcade.collide(coyotl, layer);
+
+      if (coyotl.body.touching.left) {
+        coyotl.scale.x *= -1;
+        coyotl.body.velocity.x = 100;
+      } else if (coyotl.body.touching.right) {
+        coyotl.scale.x *= 1;
+        coyotl.body.velocity.x = -100
+      } else {
+        coyotl.body.velocity.x = -100;
+      }
     });
 
   }
