@@ -129,16 +129,12 @@ playState.prototype = {
     coyotl.forEach(function(coyotl) {
       game.physics.arcade.collide(coyotl, ground);
       game.physics.arcade.collide(coyotl, ice);
-      game.physics.arcade.collide(coyotl, layer);
+      var hitWall = game.physics.arcade.collide(coyotl, layer);
+      coyotl.body.velocity.x = -100;
 
-      if (coyotl.body.touching.left) {
+      if (hitWall && coyotl.body.touching.left) {
         coyotl.scale.x *= -1;
-        coyotl.body.velocity.x = 100;
-      } else if (coyotl.body.touching.right) {
-        coyotl.scale.x *= 1;
-        coyotl.body.velocity.x = -100
-      } else {
-        coyotl.body.velocity.x = -100;
+        coyotl.body.velocity.x *= -1;
       }
     });
 
