@@ -58,6 +58,7 @@ playState.prototype = {
       coyotl.animations.play('move');
       coyotl.anchor.setTo(.5, .5);
       game.physics.enable(coyotl);
+      coyotl.body.velocity.x = -100;
     })
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
@@ -65,7 +66,7 @@ playState.prototype = {
     // Finally select the Tiled layer to collide with
     map.setCollisionBetween(1, 999, true, 'GROUND');
     map.setCollisionBetween(1, 999, true, 'ICE');
-    map.setCollisionBetween(1,999, true, 'COL');
+    map.setCollisionBetween(1, 999, true, 'COL');
 
     // Add Keyboard Controls
     cursors = game.input.keyboard.createCursorKeys();
@@ -130,12 +131,16 @@ playState.prototype = {
       game.physics.arcade.collide(coyotl, ground);
       game.physics.arcade.collide(coyotl, ice);
       var hitWall = game.physics.arcade.collide(coyotl, layer);
-      coyotl.body.velocity.x = -100;
 
-      if (hitWall && coyotl.body.touching.left) {
+
+      if (hitWall && coyotl.body.touching.right || coyotl.body.blocked.right) {
+        coyotl.body.velocity.x = -100;
         coyotl.scale.x *= -1;
-        coyotl.body.velocity.x *= -1;
-      }
+      } else if (hitWall && coyotl.body.touching.left || coyotl.body.blocked.left) {
+        coyotl.body.velocity.x = 100;
+        coyotl.scale.x *= -1;
+      };
+
     });
 
   }
