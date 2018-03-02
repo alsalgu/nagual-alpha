@@ -96,6 +96,7 @@ playState.prototype = {
       var hitIce = game.physics.arcade.collide(player, ice);
       var hitSpikes = game.physics.arcade.collide(player, spikes);
       var hitPapalotl = game.physics.arcade.overlap(player, papalotl, playState.prototype.collectPapalotl)
+      var hitCoyotl = game.physics.arcade.collide(player, coyotl);
 
       // Player Controls
       player.body.velocity.x = 0;
@@ -122,7 +123,7 @@ playState.prototype = {
         player.body.velocity.y = -350;
       };
 
-      if (hitSpikes) {
+      if (hitSpikes || hitCoyotl) {
         console.log('owie')
       };
     });
