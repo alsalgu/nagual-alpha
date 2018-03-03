@@ -21,7 +21,11 @@ game.state.add('play', playState);
 
 //Create Global Functions to be Shared Across States/Levels
 
-
+game.prototype = {
+  collectPapalotl : function(player, papalotl){
+    papalotl.kill();
+  }
+}
 // Once all states have been added, start the game
 // By Calling Boot State.
 game.state.start('boot');}
