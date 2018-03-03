@@ -26,6 +26,7 @@ window.onload = function() {
   // To access them elsewhere write them as: game.prototype.collectPapalotl;
 
   game.prototype = {
+
     create : function(){
       // Adding Global Parent Groups
       // These will manage functions for overall categories
@@ -45,6 +46,7 @@ window.onload = function() {
     // PLAYER FUNCTIONS //
     //////////////////////
     playerFunctions: function(){
+      cursors = game.input.keyboard.createCursorKeys();
       // Enable collision checks between params
       // First Param is a sprite
       // Second param is a layer

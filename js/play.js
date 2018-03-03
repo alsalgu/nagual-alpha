@@ -66,8 +66,6 @@ playState.prototype = {
     map.setCollisionBetween(1, 999, true, 'COL');
 
     // Add Keyboard Controls
-    cursors = game.input.keyboard.createCursorKeys();
-
     //Attempting to add Tiled Objects to Phaser Groups
   },
 
@@ -85,46 +83,8 @@ playState.prototype = {
   },
 
   update: function() {
-    // Enable collision checks between params
-    // First Param is a sprite
-    // Second param is a layer
-    player.forEach(function(player) {
-      var hitPlat = game.physics.arcade.collide(player, ground);
-      var hitIce = game.physics.arcade.collide(player, ice);
-      var hitSpikes = game.physics.arcade.collide(player, spikes);
-      var hitPapalotl = game.physics.arcade.overlap(player, papalotl, game.prototype.collectPapalotl)
-      var hitCoyotl = game.physics.arcade.collide(player, coyotl);
 
-      // Player Controls
-      player.body.velocity.x = 0;
-      if (cursors.left.isDown) {
-        //  Move to the left
-        player.body.velocity.x = -150;
-
-        player.animations.play('move');
-      } else if (cursors.right.isDown) {
-        //  Move to the right
-        player.body.velocity.x = 150;
-
-        player.animations.play('move');
-      } else {
-        //  Stand still
-        player.animations.stop();
-
-        player.frame = 1;
-      }
-      //  Allow the player to jump if they are touching the ground.
-      if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
-        player.body.velocity.y = -350;
-      } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
-        player.body.velocity.y = -350;
-      };
-
-      if (hitSpikes || hitCoyotl) {
-        console.log('owie')
-      };
-    });
-
+    game.prototype.playerFunctions();
     coyotl.forEach(function(coyotl) {
       game.physics.arcade.collide(coyotl, ground);
       game.physics.arcade.collide(coyotl, ice);
