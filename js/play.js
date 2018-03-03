@@ -41,10 +41,6 @@ playState.prototype = {
     spikes.forEach(function(spikes) {
       spikes.body.immovable = true;
     });
-    papalotl.forEach(function(papalotl) {
-      papalotl.animations.add('flutter', [23, 24, 25], 10, true);
-      papalotl.animations.play('flutter');
-    });
     player.forEach(function(player) {
       player.body.bounce.y = 0.2;
       player.body.gravity.y = 700;
@@ -59,7 +55,8 @@ playState.prototype = {
       coyotl.anchor.setTo(.5, .5);
       game.physics.enable(coyotl);
       coyotl.body.velocity.x = -100;
-    })
+    });
+    game.prototype.animatePapalotl();
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
     // Then set collision to true
