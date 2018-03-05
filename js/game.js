@@ -12,6 +12,7 @@ window.onload = function() {
   var layer;
   var collision;
   var cursors;
+  var enemies;
 
   // Adding each state with a calling and defining name.
   game.state.add('boot', bootState);
@@ -27,70 +28,41 @@ window.onload = function() {
 
   game.prototype = {
 
-    create : function(){
+    create: function() {
       // Adding Global Parent Groups
       // These will manage functions for overall categories
       // For example, all collectibles will get killed()
       // But each collectible will have specialized functions later.
       var collectibles = game.add.group();
-      var enemies = game.add.group();
       var platforms = game.add.group();
       var player = game.add.group();
       // Maybe the HUD should be its own prototype???
       var hud = game.add.group();
-      // SubGroups will be in their respective level state
+            // SubGroups will be in their respective level state
       // ex: var iceBlocks = game.add.physicsGroup(Phaser.Physics.P2JS);
       // To add them to the main group: platforms.add(iceBlocks);
-    },
-    ///////////////////////
-    // PLAYER FUNCTIONS //
-    //////////////////////
-    playerFunctions: function(){
-      cursors = game.input.keyboard.createCursorKeys();
-      // Enable collision checks between params
-      // First Param is a sprite
-      // Second param is a layer
-      player.forEach(function(player) {
-        var hitPlat = game.physics.arcade.collide(player, ground);
-        var hitIce = game.physics.arcade.collide(player, ice);
-        var hitSpikes = game.physics.arcade.collide(player, spikes);
-        var hitPapalotl = game.physics.arcade.overlap(player, papalotl, game.prototype.collectPapalotl)
-        var hitCoyotl = game.physics.arcade.collide(player, coyotl);
-
-        // Player Controls
-        player.body.velocity.x = 0;
-        if (cursors.left.isDown) {
-          //  Move to the left
-          player.body.velocity.x = -150;
-
-          player.animations.play('move');
-        } else if (cursors.right.isDown) {
-          //  Move to the right
-          player.body.velocity.x = 150;
-
-          player.animations.play('move');
-        } else {
-          //  Stand still
-          player.animations.stop();
-
-          player.frame = 1;
-        }
-        //  Allow the player to jump if they are touching the ground.
-        if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
-          player.body.velocity.y = -350;
-        } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
-          player.body.velocity.y = -350;
-        };
-
-        if (hitSpikes || hitCoyotl) {
-          console.log('owie')
-        };
-      });
     },
     animatePapalotl: function() {
       papalotl.forEach(function(papalotl) {
         papalotl.animations.add('flutter', [23, 24, 25], 10, true);
         papalotl.animations.play('flutter');
+      });
+    },
+    animateCoyotl: function() {
+      player.forEach(function(player) {
+        player.body.bounce.y = 0.2;
+        player.body.gravity.y = 700;
+        player.body.collideWorldBounds = true;
+        player.animations.add('move', [0, 1], 10, true);
+        game.camera.follow(player);
+      });
+      coyotl.forEach(function(coyotl) {
+        coyotl.body.gravity.y = 700;
+        coyotl.animations.add('move', [13, 14, 15], 10, true);
+        coyotl.animations.play('move');
+        coyotl.anchor.setTo(.5, .5);
+        game.physics.enable(coyotl);
+        coyotl.body.velocity.x = -100;
       });
     },
     collectPapalotl: function(player, papalotl) {

@@ -4,8 +4,8 @@ var playState = function(game) {}
 playState.prototype = {
   create: function() {
     // Physics enabled overall.
-    game.physics.startSystem(Phaser.Physics.ARCADE)
-
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    cursors = game.input.keyboard.createCursorKeys();
     // Setting key to simple definition
     map = game.add.tilemap('testMap');
 
@@ -24,12 +24,13 @@ playState.prototype = {
     ground = map.createLayer('GROUND');
     ice = map.createLayer('ICE');
     water = map.createLayer('WATER');
+    enemies = game.add.group();
     waterObject = game.add.physicsGroup();
     spikes = game.add.physicsGroup();
     player = game.add.physicsGroup();
     coyotl = game.add.physicsGroup();
     papalotl = game.add.physicsGroup();
-    collision = game.add.physicsGroup();
+    enemies.add(coyotl);
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
@@ -41,21 +42,7 @@ playState.prototype = {
     spikes.forEach(function(spikes) {
       spikes.body.immovable = true;
     });
-    player.forEach(function(player) {
-      player.body.bounce.y = 0.2;
-      player.body.gravity.y = 700;
-      player.body.collideWorldBounds = true;
-      player.animations.add('move', [0, 1], 10, true);
-      game.camera.follow(player);
-    });
-    coyotl.forEach(function(coyotl) {
-      coyotl.body.gravity.y = 700;
-      coyotl.animations.add('move', [13, 14, 15], 10, true);
-      coyotl.animations.play('move');
-      coyotl.anchor.setTo(.5, .5);
-      game.physics.enable(coyotl);
-      coyotl.body.velocity.x = -100;
-    });
+    game.prototype.animateCoyotl();
     game.prototype.animatePapalotl();
     // Set Collision for tiles,
     // 1 and 2 PARAMs are the tile numbers to be checked.
@@ -66,6 +53,7 @@ playState.prototype = {
     map.setCollisionBetween(1, 999, true, 'COL');
 
     // Add Keyboard Controls
+    cursors = game.input.keyboard.createCursorKeys();
     //Attempting to add Tiled Objects to Phaser Groups
   },
 
@@ -83,8 +71,42 @@ playState.prototype = {
   },
 
   update: function() {
+    player.forEach(function(player) {
+      var hitPlat = game.physics.arcade.collide(player, ground);
+      var hitIce = game.physics.arcade.collide(player, ice);
+      var hitSpikes = game.physics.arcade.collide(player, spikes);
+      var hitPapalotl = game.physics.arcade.overlap(player, papalotl, game.prototype.collectPapalotl)
+      var hitCoyotl = game.physics.arcade.collide(player, coyotl);
 
-    game.prototype.playerFunctions();
+      // Player Controls
+      player.body.velocity.x = 0;
+      if (cursors.left.isDown) {
+        //  Move to the left
+        player.body.velocity.x = -150;
+
+        player.animations.play('move');
+      } else if (cursors.right.isDown) {
+        //  Move to the right
+        player.body.velocity.x = 150;
+
+        player.animations.play('move');
+      } else {
+        //  Stand still
+        player.animations.stop();
+
+        player.frame = 1;
+      }
+      //  Allow the player to jump if they are touching the ground.
+      if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitPlat) {
+        player.body.velocity.y = -350;
+      } else if (cursors.up.isDown /*&& player.body.onFloor()*/ && hitIce) {
+        player.body.velocity.y = -350;
+      };
+
+      if (hitSpikes || hitCoyotl) {
+        console.log('owie')
+      };
+    });
     coyotl.forEach(function(coyotl) {
       game.physics.arcade.collide(coyotl, ground);
       game.physics.arcade.collide(coyotl, ice);
