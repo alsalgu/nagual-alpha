@@ -1,6 +1,13 @@
 var playState = function(game) {}
 
-
+// This is the JS file used to test and learn Phaser
+// THese are some notes to keep myself on track.
+// There are two main function components: Create and update
+// Create handles the creation of objects and maps to be used in this state.
+// Update handles the constant update of detecting player inputs and object movement
+// IN between those functions are helper functions used to move the game along.
+// I have the more common ones in game.js such as game.prototype.collectPapalotl
+// Keep this JS file as a guide in how to build the rest of the levels. 
 playState.prototype = {
   create: function() {
     // Physics enabled overall.
