@@ -29,10 +29,11 @@ playState.prototype = {
     papalotl = game.add.physicsGroup();
     // Platform Group
     spikes = game.add.physicsGroup();
+    walls = game.add.physicsGroup();
     // Enemy Groups
     coyotl = game.add.physicsGroup();
     slug = game.add.physicsGroup();
-
+;
     // Import Objects from Tiled JSON into Game World
     // Params = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)
@@ -42,6 +43,7 @@ playState.prototype = {
     map.createFromObjects('OBJECTS', 'coyotl', 'tiles', 13, true, false, coyotl);
     map.createFromObjects('OBJECTS', 'slug', 'tiles', 6, true, false, slug);
     map.createFromObjects('OBJECTS', 'papalotl', 'tiles', 23, true, false, papalotl);
+    map.createFromObjects('OBJECTS', 'wall', 'tiles', 0, true, false, walls);
 
     // Create and Animate each of the placed objects
     game.prototype.animatePapalotl();
@@ -49,6 +51,14 @@ playState.prototype = {
 
     player.forEach(function(player){
       game.camera.follow(player);
+    });
+
+    spikes.forEach(function(spikes){
+      spikes.body.immovable = true;
+    });
+
+    walls.forEach(function(walls){
+      walls.body.immovable = true;
     });
 
     map.setCollisionBetween(1, 999, true, 'GROUND');
@@ -94,6 +104,23 @@ playState.prototype = {
       if (hitSpikes || hitCoyotl) {
         console.log('owie')
       };
+    });
+
+    coyotl.forEach(function(coyotl) {
+      game.physics.arcade.collide(coyotl, layer);
+      game.physics.arcade.collide(coyotl, ice);
+      var hitWall = game.physics.arcade.collide(coyotl, walls);
+      var hitGround = game.physics.arcade.collide(coyotl, layer);
+
+
+      if (hitWall && coyotl.body.touching.right || coyotl.body.blocked.right) {
+        coyotl.body.velocity.x = -100;
+        coyotl.scale.x *= -1;
+      } else if (hitWall && coyotl.body.touching.left || coyotl.body.blocked.left) {
+        coyotl.body.velocity.x = 100;
+        coyotl.scale.x *= -1;
+      };
+
     });
   }
 }

@@ -1,13 +1,6 @@
 var playState = function(game) {}
 
-// This is the JS file used to test and learn Phaser
-// THese are some notes to keep myself on track.
-// There are two main function components: Create and update
-// Create handles the creation of objects and maps to be used in this state.
-// Update handles the constant update of detecting player inputs and object movement
-// IN between those functions are helper functions used to move the game along.
-// I have the more common ones in game.js such as game.prototype.collectPapalotl
-// Keep this JS file as a guide in how to build the rest of the levels. 
+
 playState.prototype = {
   create: function() {
     // Physics enabled overall.
@@ -31,13 +24,12 @@ playState.prototype = {
     ground = map.createLayer('GROUND');
     ice = map.createLayer('ICE');
     water = map.createLayer('WATER');
-    enemies = game.add.group();
     waterObject = game.add.physicsGroup();
     spikes = game.add.physicsGroup();
     player = game.add.physicsGroup();
     coyotl = game.add.physicsGroup();
     papalotl = game.add.physicsGroup();
-    enemies.add(coyotl);
+    collision = game.add.physicsGroup();
     // Creating Objects from Tiled Objects layers JSON data
     // Param = (Layer Name, Object Name, Tilesheet from Phaser, TIlesheet Frame
     // true, false, group you're adding them into)

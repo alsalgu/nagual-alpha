@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="50" height="20" tilewidth="48" tileheight="48" infinite="0" nextobjectid="239">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="50" height="20" tilewidth="48" tileheight="48" infinite="0" nextobjectid="256">
  <tileset firstgid="1" name="testTilesheet" tilewidth="48" tileheight="48" tilecount="100" columns="10">
   <image source="../../assets/sprites/tilesheets/testTilesheet.png" width="480" height="480"/>
  </tileset>
@@ -78,7 +78,21 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,154,155,155,155,155,155,155,156,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="OBJECTS">
+ <objectgroup name="WALLS">
+  <object id="241" name="wall" gid="112" x="144" y="624" width="48" height="48"/>
+  <object id="242" name="wall" gid="112" x="336" y="624" width="48" height="48"/>
+  <object id="243" name="wall" gid="112" x="432" y="720" width="48" height="48"/>
+  <object id="245" name="wall" gid="112" x="768" y="816" width="48" height="48"/>
+  <object id="246" name="wall" gid="112" x="864" y="816" width="48" height="48"/>
+  <object id="247" name="wall" gid="112" x="960" y="720" width="48" height="48"/>
+  <object id="248" name="wall" gid="112" x="1104" y="672" width="48" height="48"/>
+  <object id="249" name="wall" gid="112" x="1296" y="672" width="48" height="48"/>
+  <object id="250" name="wall" gid="112" x="1440" y="720" width="48" height="48"/>
+  <object id="251" name="wall" gid="112" x="1920" y="816" width="48" height="48"/>
+  <object id="252" name="wall" gid="112" x="1584" y="816" width="48" height="48"/>
+  <object id="253" name="wall" gid="112" x="2016" y="720" width="48" height="48"/>
+  <object id="254" name="wall" gid="112" x="2064" y="672" width="48" height="48"/>
+  <object id="255" name="wall" gid="112" x="2256" y="672" width="48" height="48"/>
   <object id="207" name="coyotl" gid="114" x="1200" y="672" width="48" height="48"/>
   <object id="208" name="coyotl" gid="114" x="480" y="816" width="48" height="48"/>
   <object id="209" name="coyotl" gid="114" x="672" y="816" width="48" height="48"/>
