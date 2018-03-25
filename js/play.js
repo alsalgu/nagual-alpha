@@ -48,6 +48,8 @@ playState.prototype = {
     // Create and Animate each of the placed objects
     game.prototype.animatePapalotl();
     game.prototype.animateCoyotl();
+    game.prototype.animatePlayer();
+    game.prototype.animateSlug();
 
     player.forEach(function(player){
       game.camera.follow(player);
@@ -121,6 +123,20 @@ playState.prototype = {
         coyotl.scale.x *= -1;
       };
 
+    });
+
+    slug.forEach(function(slug){
+      game.physics.arcade.collide(slug, layer);
+      game.physics.arcade.collide(slug, ice);
+      var hitWall = game.physics.arcade.collide(slug, walls);
+
+      if (hitWall && slug.body.touching.right || slug.body.blocked.right) {
+        slug.body.velocity.x = -100;
+        slug.scale.x *= -1;
+      } else if (hitWall && slug.body.touching.left || slug.body.blocked.left) {
+        slug.body.velocity.x = 100;
+        slug.scale.x *= -1;
+      };
     });
   }
 }

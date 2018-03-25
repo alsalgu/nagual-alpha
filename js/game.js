@@ -49,13 +49,6 @@ window.onload = function() {
       });
     },
     animateCoyotl: function() {
-      player.forEach(function(player) {
-        player.body.bounce.y = 0.2;
-        player.body.gravity.y = 700;
-        player.body.collideWorldBounds = true;
-        player.animations.add('move', [0, 1], 10, true);
-        game.camera.follow(player);
-      });
       coyotl.forEach(function(coyotl) {
         coyotl.body.gravity.y = 700;
         coyotl.animations.add('move', [13, 14, 15], 10, true);
@@ -63,6 +56,25 @@ window.onload = function() {
         coyotl.anchor.setTo(.5, .5);
         game.physics.enable(coyotl);
         coyotl.body.velocity.x = -100;
+      });
+    },
+    animatePlayer: function(){
+      player.forEach(function(player) {
+        player.body.bounce.y = 0.2;
+        player.body.gravity.y = 700;
+        player.body.collideWorldBounds = true;
+        player.animations.add('move', [0, 1], 10, true);
+        game.camera.follow(player);
+      });
+    },
+    animateSlug: function(){
+      slug.forEach(function(slug){
+        slug.body.gravity.y = 700;
+        slug.animations.add('move', [6, 7], 10, true);
+        slug.animations.play('move');
+        slug.anchor.setTo(.5, .5);
+        game.physics.enable(slug);
+        slug.body.velocity.x = -100;
       });
     },
     collectPapalotl: function(player, papalotl) {
