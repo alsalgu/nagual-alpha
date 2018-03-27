@@ -78,7 +78,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,154,155,155,155,155,155,155,156,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="WALLS">
+ <objectgroup name="OBJECTS">
   <object id="241" name="wall" gid="112" x="144" y="624" width="48" height="48"/>
   <object id="242" name="wall" gid="112" x="336" y="624" width="48" height="48"/>
   <object id="243" name="wall" gid="112" x="432" y="720" width="48" height="48"/>
